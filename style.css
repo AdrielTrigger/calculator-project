@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(148, 148, 148);
+}
+
+.case {
+    text-align: center;
+    display: grid;
+    grid-template-rows: 100px 400px;
+    background-color: rgb(39, 39, 153);
+    height: 500px;
+    width: 400px;
+}
+
+.screen {
+    color: white;
+    font-size: 40px;
+}
+
+.buttons {
+    display: grid;
+    color: white;
+    font-size: 40px;
+    text-align: center;
+    grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+}
+
+.button {
+    border: solid white 2px;
+}
+
+.button:hover {
+    background-color: rgb(66, 66, 182);
+}
+
+.button:active {
+    background-color: rgb(113, 113, 233);
+    color: blue;
+}
