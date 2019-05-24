@@ -2,6 +2,7 @@
 let screenData = [];
 let operation = [];
 let cleared = [];
+let operationDone;
 
 let screen = document.querySelector('.screen');
 
@@ -25,6 +26,11 @@ const result = document.querySelector('.result');
 
 //buttons' codes for registering numbers and operators
 one.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -34,6 +40,11 @@ one.addEventListener('click', () => {
 });
 
 two.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -43,6 +54,11 @@ two.addEventListener('click', () => {
 });
 
 three.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -52,6 +68,11 @@ three.addEventListener('click', () => {
 });
 
 four.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -61,6 +82,11 @@ four.addEventListener('click', () => {
 });
 
 five.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -70,6 +96,11 @@ five.addEventListener('click', () => {
 });
 
 six.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -79,6 +110,11 @@ six.addEventListener('click', () => {
 });
 
 seven.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -88,6 +124,11 @@ seven.addEventListener('click', () => {
 });
 
 eight.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -97,6 +138,11 @@ eight.addEventListener('click', () => {
 });
 
 nine.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -106,6 +152,11 @@ nine.addEventListener('click', () => {
 });
 
 zero.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        screenData = [];
+        operation = [];
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -115,6 +166,9 @@ zero.addEventListener('click', () => {
 });
 
 minus.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -130,6 +184,9 @@ minus.addEventListener('click', () => {
 });
 
 plus.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -145,6 +202,9 @@ plus.addEventListener('click', () => {
 });
 
 multiply.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -160,6 +220,9 @@ multiply.addEventListener('click', () => {
 });
 
 divide.addEventListener('click', () => {
+    if (operationDone === 'done') {
+        operationDone = 'undone';
+    }
     if (typeof screenData === 'string') {
         screenData = screenData.split('');
     }
@@ -178,51 +241,71 @@ clear.addEventListener('click', () => {
     screenData = [];
     operation = [];
     screen.textContent = screenData;
+    operationDone = 'undone';
 });
+
+function calculate (n1, n2, op) {
+    if (op === '+') {
+        return n1 + n2;
+    } else if (op === '-') {
+        return n1 - n2;
+    } else if (op === '*') {
+        return n1 * n2;
+    } else if (op === '/') {
+        return n1 / n2;
+    }
+}
 
 //function to execute the calculations and provide the result
 result.addEventListener('click', () => {
-    let operandOne = [];
-    let operandTwo = [];
-    let operator;
-    let output;
-
+    let opPos = [];
     for (i = 0; i < operation.length; i++) {
         if (operation[i] === '+' || operation[i] === '-' || operation[i] === '*' || operation[i] === '/') {
-            operatorPos = i;
-            break;
+            opPos.push(i);
         }
     }
 
-    if (operation.length >= 3) {
-        for (i = 0; i < operation.length; i++) {
-            if (i < operatorPos) {
-                operandOne.push(operation[i]);
-            } else if (i === operatorPos) {
-                operator = operation[i];
-            } else if (i > operatorPos) {
-                operandTwo.push(operation[i]);
-            }
+    let operators = operation.filter((item) => {
+        if (item === '+' || item === '-' || item === '*' || item === '/') {
+            return item;
+        }
+    });
+
+    let operands = [];
+    operands.length = operators.length + 1;
+
+   // reserved for operand search
+
+   for (i = 0; i < operands.length; i++) {
+       operand = [];
+       if (i === 0) {
+           for (j = 0; j < opPos[i]; j++) {
+               operand.push(operation[j]);
+           }
+       } else if (opPos.length > 1 && opPos[i] != undefined) {
+           for (j = opPos[i - 1] + 1; j < opPos[i]; j++) {
+               operand.push(operation[j]);
+           }
+       } else {
+           for (j = opPos[i - 1] + 1; j < operation.length; j++) {
+               operand.push(operation[j]);
+           }
+       }
+       operand = operand.join('');
+       operands[i] = Number(operand);
+   }
+
+    for (i = 0; i < operators.length; i++) {
+        if (i === 0) {
+            results = calculate (operands[i], operands[i + 1], operators[i]);
+        } else {
+            results = calculate (results, operands[i + 1], operators[i]);
         }
     }
 
-    operandOne = operandOne.join('');
-    operandOne = Number(operandOne);
-    operandTwo = operandTwo.join('');
-    operandTwo = Number(operandTwo);
-    
-    if (operator === '+') {
-        output = operandOne + operandTwo;
-    } else if (operator === '-') {
-        output = operandOne - operandTwo;
-    } else if (operator === '*') {
-        output = operandOne * operandTwo;
-    } else if (operator === '/') {
-        output = operandOne / operandTwo;
-    }
-
-    screenData = String(output);
+    screenData = String(results);
     operation = [];
     operation.push(screenData);
     screen.textContent = screenData;
+    operationDone = 'done';
 });
