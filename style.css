@@ -22,6 +22,7 @@ body {
 .screen {
     color: white;
     font-size: 40px;
+    border: solid white 2px;
 }
 
 .buttons {
@@ -32,15 +33,15 @@ body {
     grid-template: repeat(4, 1fr) / repeat(4, 1fr);
 }
 
-.button {
+.number, .operator, .clear, .result {
     border: solid white 2px;
 }
 
-.button:hover {
+.number:hover , .operator:hover, .clear:hover, .result:hover {
     background-color: rgb(66, 66, 182);
 }
 
-.button:active {
+.number:active, .operator:hover, .clear:hover, .result.hover {
     background-color: rgb(113, 113, 233);
     color: blue;
 }
