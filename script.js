@@ -1,8 +1,5 @@
-//two arrays that will work as the content of the screen and as an operation tracker, respectively
-let screenData = [];
-let operation = [];
-let cleared = [];
-let operationDone;
+let screenData = [], num1 = [], num2 = [], operator, opCheck = 'off', numCheck = 'off';
+screenData.length = 3;
 
 let screen = document.querySelector('.screen');
 
@@ -11,50 +8,6 @@ const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 const clear = document.querySelector('.clear');
 const result = document.querySelector('.result');
-
-//buttons' codes for registering numbers and operators
-numbers.forEach(current => {
-    current.addEventListener('click', (e) => {
-        if (operationDone === 'done') {
-            screenData = [];
-            operation = [];
-            operationDone = 'undone';
-        }
-        if (typeof screenData === 'string') {
-            screenData = screenData.split('');
-        }
-        screenData.push(e.target.textContent);
-        operation.push(e.target.textContent);
-        screen.textContent = screenData.join('');
-    });
-});
-
-operators.forEach(current => {
-    current.addEventListener('click', (e) => {
-        if (operationDone === 'done') {
-            operationDone = 'undone';
-        }
-        if (typeof screenData === 'string') {
-            screenData = screenData.split('');
-        }
-        if (screenData[screenData.length - 1] === '1' || screenData[screenData.length - 1] === '2' || 
-            screenData[screenData.length - 1] === '3' || screenData[screenData.length - 1] === '4' || 
-            screenData[screenData.length - 1] === '5' || screenData[screenData.length - 1] === '6' || 
-            screenData[screenData.length - 1] === '7' || screenData[screenData.length - 1] === '8' || 
-            screenData[screenData.length - 1] === '9' || screenData[screenData.length - 1] === '0') {
-            screenData.push(' ' + e.target.textContent + ' ');
-            operation.push(e.target.textContent);
-        }
-        screen.textContent = screenData.join('');
-    });
-});
-
-clear.addEventListener('click', () => {
-    screenData = [];
-    operation = [];
-    screen.textContent = screenData;
-    operationDone = 'undone';
-});
 
 function calculate (n1, n2, op) {
     if (op === '+') {
@@ -68,56 +21,57 @@ function calculate (n1, n2, op) {
     }
 }
 
-//function to execute the calculations and provide the result
-result.addEventListener('click', () => {
-    let opPos = [];
-    for (i = 0; i < operation.length; i++) {
-        if (operation[i] === '+' || operation[i] === '-' || operation[i] === '*' || operation[i] === '/') {
-            opPos.push(i);
-        }
-    }
-
-    let operators = operation.filter((item) => {
-        if (item === '+' || item === '-' || item === '*' || item === '/') {
-            return item;
+numbers.forEach((current) => {
+    current.addEventListener('click', (e) => {
+        if (opCheck === 'off') {
+            num1.push(e.target.textContent);
+            screenData[0] = num1.join('');
+            screen.textContent = screenData.join(' ');
+            numCheck = 'on';
+        } else {
+            num2.push(e.target.textContent);
+            screenData[2] = num2.join('');
+            screen.textContent = screenData.join(' ');
         }
     });
+});
 
-    let operands = [];
-    operands.length = operators.length + 1;
-
-   // reserved for operand search
-
-   for (i = 0; i < operands.length; i++) {
-       operand = [];
-       if (i === 0) {
-           for (j = 0; j < opPos[i]; j++) {
-               operand.push(operation[j]);
-           }
-       } else if (opPos.length > 1 && opPos[i] != undefined) {
-           for (j = opPos[i - 1] + 1; j < opPos[i]; j++) {
-               operand.push(operation[j]);
-           }
-       } else {
-           for (j = opPos[i - 1] + 1; j < operation.length; j++) {
-               operand.push(operation[j]);
-           }
-       }
-       operand = operand.join('');
-       operands[i] = Number(operand);
-   }
-
-    for (i = 0; i < operators.length; i++) {
-        if (i === 0) {
-            results = calculate (operands[i], operands[i + 1], operators[i]);
-        } else {
-            results = calculate (results, operands[i + 1], operators[i]);
+operators.forEach((current) => {
+    current.addEventListener('click', (e) => {
+        if (numCheck === 'on') {
+            if (opCheck === 'off') {
+                operator = e.target.textContent;
+                screenData[1] = operator;
+                screen.textContent = screenData.join(' ');
+                opCheck = 'on';
+            } else {
+                results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
+        
+                num1 = String(results).split('');
+                num2 = [];
+                operator = e.target.textContent;
+                screenData = [], screenData[0] = num1.join(''), screenData[1] = e.target.textContent;
+                screen.textContent = screenData.join(' ');
+            }
         }
-    }
+    });
+});
 
-    screenData = String(results);
-    operation = [];
-    operation.push(screenData);
+clear.addEventListener('click', () => {
+    opCheck = 'off';
+    numCheck = 'off';
+    screenData = [];
+    num1 = [], num2 = [];
     screen.textContent = screenData;
-    operationDone = 'done';
+});
+
+result.addEventListener('click', () => {
+    if (opCheck === 'on') {
+        results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
+        opCheck = 'off';
+        num1 = String(results).split('');
+        num2 = [];
+        screenData = [], screenData[0] = num1.join('');
+        screen.textContent = screenData;
+    }
 });
