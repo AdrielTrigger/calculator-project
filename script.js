@@ -44,7 +44,7 @@ numbers.forEach((current) => {
 });
 
 operators.forEach((current) => {
-    current.addEventListener('click', (e) => {
+    current.addEventListener('click', (e) => {     
         if (numCheck === 'on') {
             if (opCheck === 'off') {
                 operator = e.target.textContent;
@@ -55,7 +55,21 @@ operators.forEach((current) => {
                 if (num2check === 'on') {
                     results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
         
-                    num1 = String(results).split('');
+                    if (Number.isInteger(results) === false) {
+                        num1 = [];
+                        for (i = 0; i < String(results).split('').length; i++) {
+                            if (String(results).split('')[i] === '.') {
+                                dotIndex = i;
+                                break;
+                            }
+                        }
+                        console.log(dotIndex);
+                        for (i = 0; i <= dotIndex + 2; i++) {
+                            num1.push(String(results).split('')[i]);
+                        }
+                    } else {
+                        num1 = String(results).split('');
+                    }
                     num2 = [];
                     num2check = 'off';
                     operator = e.target.textContent;
@@ -81,7 +95,20 @@ result.addEventListener('click', () => {
     if (opCheck === 'on' && num2check === 'on') {
         results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
         opCheck = 'off';
-        num1 = String(results).split('');
+        if (Number.isInteger(results) === false) {
+            num1 = [];
+            for (i = 0; i < String(results).split('').length; i++) {
+                if (String(results).split('')[i] === '.') {
+                    dotIndex = i;
+                    break;
+                }
+            }
+            for (i = 0; i <= dotIndex + 2; i++) {
+                num1.push(String(results).split('')[i]);
+            }
+        } else {
+            num1 = String(results).split('');
+        }
         num2 = [];
         num2check = 'off';
         screenData = [], screenData[0] = num1.join('');

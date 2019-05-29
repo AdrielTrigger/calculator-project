@@ -19,12 +19,20 @@ body {
     width: 400px;
     border: solid white 6px;
     border-radius: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .screen {
+    width: 400px;
     color: white;
     font-size: 40px;
     border-bottom: solid white 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
 }
 
 .buttons {
