@@ -1,4 +1,4 @@
-let screenData = [], num1 = [], num2 = [], operator, opCheck = 'off', numCheck = 'off', opDone = 'undone';
+let screenData = [], num1 = [], num2 = [], operator, opCheck = 'off', numCheck = 'off', num2check = 'off', opDone = 'undone';
 screenData.length = 3;
 
 let screen = document.querySelector('.screen');
@@ -38,6 +38,7 @@ numbers.forEach((current) => {
             num2.push(e.target.textContent);
             screenData[2] = num2.join('');
             screen.textContent = screenData.join(' ');
+            num2check = 'on'
         }
     });
 });
@@ -51,14 +52,17 @@ operators.forEach((current) => {
                 screen.textContent = screenData.join(' ');
                 opCheck = 'on';
             } else {
-                results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
+                if (num2check === 'on') {
+                    results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
         
-                num1 = String(results).split('');
-                num2 = [];
-                operator = e.target.textContent;
-                screenData = [], screenData[0] = num1.join(''), screenData[1] = e.target.textContent;
-                screen.textContent = screenData.join(' ');
-                opDone = 'done';
+                    num1 = String(results).split('');
+                    num2 = [];
+                    num2check = 'off';
+                    operator = e.target.textContent;
+                    screenData = [], screenData[0] = num1.join(''), screenData[1] = e.target.textContent;
+                    screen.textContent = screenData.join(' ');
+                    opDone = 'done';
+                }
             }
         }
     });
@@ -67,17 +71,19 @@ operators.forEach((current) => {
 clear.addEventListener('click', () => {
     opCheck = 'off';
     numCheck = 'off';
+    num2check = 'off';
     screenData = [];
     num1 = [], num2 = [];
     screen.textContent = screenData;
 });
 
 result.addEventListener('click', () => {
-    if (opCheck === 'on') {
+    if (opCheck === 'on' && num2check === 'on') {
         results = calculate (Number(num1.join('')), Number(num2.join('')), operator);
         opCheck = 'off';
         num1 = String(results).split('');
         num2 = [];
+        num2check = 'off';
         screenData = [], screenData[0] = num1.join('');
         screen.textContent = screenData;
         opDone = 'done';

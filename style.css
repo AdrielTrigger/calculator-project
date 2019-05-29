@@ -17,12 +17,14 @@ body {
     background-color: rgb(39, 39, 153);
     height: 500px;
     width: 400px;
+    border: solid white 6px;
+    border-radius: 20px;
 }
 
 .screen {
     color: white;
     font-size: 40px;
-    border: solid white 2px;
+    border-bottom: solid white 2px;
 }
 
 .buttons {
@@ -34,14 +36,58 @@ body {
 }
 
 .number, .operator, .clear, .result {
-    border: solid white 2px;
+    border-top: solid white 2px;
+    border-left: solid white 2px;
+    border-right: solid white 2px;
 }
 
-.number:hover , .operator:hover, .clear:hover, .result:hover {
+.number:hover {
     background-color: rgb(66, 66, 182);
 }
 
-.number:active, .operator:hover, .clear:hover, .result.hover {
+.number:active {
     background-color: rgb(113, 113, 233);
     color: blue;
+}
+
+.operator {
+    background-color: rgb(56, 107, 56);
+}
+
+.operator:hover {
+    background-color: rgb(82, 124, 82);
+    color: rgb(5, 80, 5);
+}
+
+.operator:active {
+    background-color: rgb(139, 182, 139);
+    color: rgb(8, 66, 8);
+}
+
+.clear {
+    background-color: red;
+}
+
+.clear:hover {
+    background-color: rgb(241, 83, 83);
+}
+
+.clear:active {
+    background-color: white;
+    color: red;
+}
+
+.result {
+    background-color: rgb(187, 187, 187);
+    color: blue;
+}
+
+.result:hover {
+    background-color: rgb(119, 119, 119);
+    color: rgb(73, 120, 248);
+}
+
+.result:active {
+    background-color: rgb(61, 61, 61);
+    color: rgb(148, 203, 255);
 }
