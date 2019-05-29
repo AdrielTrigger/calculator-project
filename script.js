@@ -1,4 +1,4 @@
-let screenData = [], num1 = [], num2 = [], operator, opCheck = 'off', numCheck = 'off';
+let screenData = [], num1 = [], num2 = [], operator, opCheck = 'off', numCheck = 'off', opDone = 'undone';
 screenData.length = 3;
 
 let screen = document.querySelector('.screen');
@@ -24,6 +24,12 @@ function calculate (n1, n2, op) {
 numbers.forEach((current) => {
     current.addEventListener('click', (e) => {
         if (opCheck === 'off') {
+            if (opDone === 'done') {
+                num1 = [];
+                numCheck = 'off';
+                screen.textContent = num1;
+                opDone = 'undone';
+            }
             num1.push(e.target.textContent);
             screenData[0] = num1.join('');
             screen.textContent = screenData.join(' ');
@@ -52,6 +58,7 @@ operators.forEach((current) => {
                 operator = e.target.textContent;
                 screenData = [], screenData[0] = num1.join(''), screenData[1] = e.target.textContent;
                 screen.textContent = screenData.join(' ');
+                opDone = 'done';
             }
         }
     });
@@ -73,5 +80,6 @@ result.addEventListener('click', () => {
         num2 = [];
         screenData = [], screenData[0] = num1.join('');
         screen.textContent = screenData;
+        opDone = 'done';
     }
 });
